@@ -26,18 +26,9 @@ const statusClass = computed(() => {
 });
 
 const logs = [
-  '正在假装调用摄像头...',
+  '正在调用摄像头...',
   '神经网络矩阵计算中...',
-  '正在对比 100 万张人眼样本...',
-  '检测眼睑开合角，置信度持续上升...',
-  '多模态视网膜语义向量化...',
-  '正在排除墨镜、刘海、屏幕反光干扰...',
-  '左眼特征点 2048 维编码完成',
-  '右眼特征点正在进入玄学收敛区间',
-  'AI 视觉专家系统正在深呼吸...',
-  '正在深度学习：人为什么会睁眼',
-  '发现可疑眼球活动，正在严肃复核...',
-  '结论接近显现，请保持当前睁眼姿势'
+  '正在深度学习'
 ];
 
 function clearTimers() {
@@ -58,8 +49,8 @@ function startScan() {
   progress.value = 0;
   isScanning.value = true;
   hasResult.value = false;
-  statusText.value = '摄像头权限握手中';
-  logItems.value = ['启动人工智能视力检测协议', '请求摄像头：状态看起来很专业'];
+  statusText.value = '正在深度学习';
+  logItems.value = ['正在深度学习'];
 
   let logIndex = 0;
   progressTimer = window.setInterval(() => {
@@ -72,13 +63,12 @@ function startScan() {
     progress.value = Math.min(progress.value, 99);
 
     if (progress.value > 18) statusText.value = '神经网络矩阵计算中';
-    if (progress.value > 45) statusText.value = '正在对比 100 万张人眼样本';
+    if (progress.value > 45) statusText.value = '正在深度学习';
     if (progress.value > 72) statusText.value = '正在深度学习';
 
     if (progress.value === 99) {
       window.clearInterval(progressTimer);
       statusText.value = '正在深度学习';
-      pushLog('进度已到 99%，正在卡住以显得更可信...');
       finishTimer = window.setTimeout(() => {
         progress.value = 100;
         statusText.value = '检测完成';
@@ -113,11 +103,11 @@ onBeforeUnmount(clearTimers);
 
 <template>
   <main class="app-shell">
-    <section class="vision-console" aria-label="人工智能视力检测仪">
+    <section class="vision-console" aria-label="人工智能视觉检测仪">
       <div class="console-topbar">
         <div>
           <p class="eyebrow">CYBER LOW-POWER OPTICS LAB</p>
-          <h1>人工智能视力</h1>
+          <h1>人工智能视觉检测</h1>
         </div>
         <div class="system-state" :class="statusClass">
           <span></span>
@@ -131,6 +121,7 @@ onBeforeUnmount(clearTimers);
             <div class="scanlines"></div>
             <div class="noise"></div>
             <div class="reticle"></div>
+            <div v-if="isScanning" class="gaze-hint">请双眼注视屏幕</div>
             <div
               class="face-lock"
               :style="{ left: `${faceX}%`, top: `${faceY}%` }"
@@ -164,7 +155,7 @@ onBeforeUnmount(clearTimers);
 
       <div class="control-strip">
         <button class="primary-action" :disabled="isScanning" @click="startScan">
-          {{ isScanning ? '检测运行中' : '开始检测视力' }}
+          {{ isScanning ? '检测运行中' : '开始检测' }}
         </button>
         <div class="progress-shell" aria-label="检测进度">
           <div class="progress-bar" :style="{ width: `${progress}%` }"></div>
@@ -176,7 +167,7 @@ onBeforeUnmount(clearTimers);
       <section class="result-dialog" role="dialog" aria-modal="true" aria-label="检测结果">
         <p>检测结果</p>
         <h2>您的眼睛目前处于<br /><strong>“睁开”</strong>状态。</h2>
-        <button @click="closeResult">确认伟大发现</button>
+        <button @click="closeResult">收到</button>
       </section>
     </div>
   </main>
