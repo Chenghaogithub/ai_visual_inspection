@@ -54,10 +54,10 @@ function startScan() {
 
   let logIndex = 0;
   progressTimer = window.setInterval(() => {
-    if (progress.value < 82) {
-      progress.value += Math.floor(Math.random() * 8) + 4;
+    if (progress.value < 86) {
+      progress.value += Math.floor(Math.random() * 9) + 6;
     } else if (progress.value < 99) {
-      progress.value += 1;
+      progress.value += Math.floor(Math.random() * 3) + 1;
     }
 
     progress.value = Math.min(progress.value, 99);
@@ -79,12 +79,12 @@ function startScan() {
         pushLog('高级视觉推理完成：眼睛状态已被发现');
       }, 2000);
     }
-  }, 230);
+  }, 160);
 
   logTimer = window.setInterval(() => {
     pushLog(logs[logIndex % logs.length]);
     logIndex += 1;
-  }, 520);
+  }, 430);
 
   faceTimer = window.setInterval(() => {
     faceX.value = 39 + Math.sin(Date.now() / 530) * 8;
